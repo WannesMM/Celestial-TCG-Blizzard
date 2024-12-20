@@ -1,0 +1,14 @@
+Video:
+            id: background_video
+            source: ''  # This will be set dynamically in the Python code
+            state: 'play'
+            options: {'eos': 'loop'}  # Loop the video
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: (1, 1)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+
+
+
+stylevars.ids.background_video.source = r"C:\Users\wanne\OneDrive\Bureaublad\Celestial Mobile\UI elements\Background.mp4"

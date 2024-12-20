@@ -1,0 +1,60 @@
+<Style>:
+    
+    Video:
+        id: background_video
+        source: ''  # This will be set dynamically in the Python code
+        state: 'play'
+        options: {'eos': 'loop'}  # Loop the video
+        allow_stretch: True
+        keep_ratio: False
+        size: root.width, root.height
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        spacing: 70
+        padding: 50
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Image:
+                id: card_image_enemy1
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                id: card_image_enemy2
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                id: card_image_enemy3
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Image:
+                id: card_image_ally1
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                id: card_image_ally2
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                id: card_image_ally3
+                source: ""
+                allow_stretch: True
+                keep_ratio: True
