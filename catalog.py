@@ -1,15 +1,33 @@
 import os
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
+from catalog import get_card_image_filepath
+from kivy.uix.image import Image
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
+from kivy.uix.video import Video
 
-def get_card_image_filepath(card_name):
-    base_directory = r'C:\Users\wanne\OneDrive\Bureaublad\Celestial Mobile\images'
-    image_filename = f"{card_name}.png"
-    image_filepath = os.path.join(base_directory, image_filename)
-    
-    print(f"Checking for image at: {image_filepath}")  # Debug print
-    
-    if os.path.exists(image_filepath):
-        print(f"Image found: {image_filepath}")  # Debug print
-        return image_filepath
-    else:
-        print(f"IMAGE NIET GEVONDEN: {image_filepath}")
-        return r"C:\Users\wanne\OneDrive\Bureaublad\Celestial Mobile\images\image not found.png"
+Builder.load_file("style.kv")
+
+class Main(App):
+    def build(self):
+        stylevars = Style()
+        base_path = os.path.dirname(__file__)
+        stylevars.ids.background_video.source = os.path.join(base_path, "UI elements", "Background.mp4")
+
+        stylevars.ids.card_image_ally1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally3.source = get_card_image_filepath("torinn inn")
+
+        stylevars.ids.card_image_enemy1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy3.source = get_card_image_filepath("torinn inn")
+
+        return stylevars
+
+class Style(Widget):
+    pass
+
+if __name__ == "__main__":
+    Main().run()
