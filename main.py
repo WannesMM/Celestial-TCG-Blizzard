@@ -7,7 +7,7 @@ from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
-from kivy.uix.videoplayer import Video
+from kivy.uix.video import Video
 # Set fullscreen mode before the window is created
 Config.set('graphics', 'fullscreen', '0') #auto for fullscreen
 Config.write()
@@ -43,7 +43,7 @@ class Main(App):
 
         stylevars = Style()
         base_path = os.path.dirname(__file__)
-        video_path = os.path.join(base_path, "UI elements", "Backgroundvideo2.mp4")
+        video_path = os.path.join(base_path, "UI elements", "story teaser.mp4")
         
         print(f"Setting background video source to: {video_path}")  # Debug print
         
