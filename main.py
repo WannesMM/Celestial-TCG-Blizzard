@@ -7,7 +7,7 @@ from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.config import Config
-
+from kivy.uix.videoplayer import Video
 # Set fullscreen mode before the window is created
 Config.set('graphics', 'fullscreen', '0') #auto for fullscreen
 Config.write()
@@ -43,7 +43,7 @@ class Main(App):
 
         stylevars = Style()
         base_path = os.path.dirname(__file__)
-        video_path = os.path.join(base_path, "UI elements", "Background video.mp4")
+        video_path = os.path.join(base_path, "UI elements", "Backgroundvideo2.mp4")
         
         print(f"Setting background video source to: {video_path}")  # Debug print
         
@@ -51,12 +51,15 @@ class Main(App):
         ui_elements_path = os.path.join(base_path, "UI elements")
         print(f"Contents of {ui_elements_path}: {os.listdir(ui_elements_path)}")  # Debug print
         
+        stylevars.ids.background_video.source = video_path
+
         if os.path.exists(video_path):
             print(f"Background video file found: {video_path}")  # Debug print
+            stylevars.ids.background_video.source = video_path
         else:
             print(f"BACKGROUND VIDEO FILE NOT FOUND: {video_path}")  # Debug print
-        
-        stylevars.ids.background_video.source = video_path
+            # Set a default image if the video is not found
+            stylevars.ids.background_video.source = os.path.join(base_path, 'images', 'image not found.png')
 
         stylevars.ids.card_image_ally1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_ally2.source = get_card_image_filepath("Noma Greon - skin1")
