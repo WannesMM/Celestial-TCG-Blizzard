@@ -59,8 +59,8 @@ class Main(App):
         stylevars.ids.background_image.source = image_path
 
         stylevars.ids.card_image_ally1.source = get_card_image_filepath("torinn inn")
-        stylevars.ids.card_image_ally2.source = get_card_image_filepath("torinn inn")
-        stylevars.ids.card_image_ally3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally2.source = get_card_image_filepath("Noma Greon - skin1")
+        stylevars.ids.card_image_ally3.source = get_card_image_filepath("Bartholomew Balderstone")
 
         stylevars.ids.card_image_ally_area1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_ally_area2.source = get_card_image_filepath("torinn inn")
@@ -73,8 +73,8 @@ class Main(App):
         stylevars.ids.card_image_ally_entity4.source = get_card_image_filepath("torinn inn")
 
         stylevars.ids.card_image_enemy1.source = get_card_image_filepath("torinn inn")
-        stylevars.ids.card_image_enemy2.source = get_card_image_filepath("torinn inn")
-        stylevars.ids.card_image_enemy3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy2.source = get_card_image_filepath("Noma Greon - skin1")
+        stylevars.ids.card_image_enemy3.source = get_card_image_filepath("Bartholomew Balderstone")
 
         stylevars.ids.card_image_enemy_area1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_enemy_area2.source = get_card_image_filepath("torinn inn")
