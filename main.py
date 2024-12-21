@@ -43,20 +43,20 @@ class Main(App):
 
         stylevars = Style()
         base_path = os.path.dirname(__file__)
-        image_path = os.path.join(base_path, "UI elements", "Background image.jpeg")
+        video_path = os.path.join(base_path, "UI elements", "Background video.mp4")
         
-        print(f"Setting background image source to: {image_path}")  # Debug print
+        print(f"Setting background video source to: {video_path}")  # Debug print
         
         # Print the contents of the UI elements directory
         ui_elements_path = os.path.join(base_path, "UI elements")
         print(f"Contents of {ui_elements_path}: {os.listdir(ui_elements_path)}")  # Debug print
         
-        if os.path.exists(image_path):
-            print(f"Background image file found: {image_path}")  # Debug print
+        if os.path.exists(video_path):
+            print(f"Background video file found: {video_path}")  # Debug print
         else:
-            print(f"BACKGROUND IMAGE FILE NOT FOUND: {image_path}")  # Debug print
+            print(f"BACKGROUND VIDEO FILE NOT FOUND: {video_path}")  # Debug print
         
-        stylevars.ids.background_image.source = image_path
+        stylevars.ids.background_video.source = video_path
 
         stylevars.ids.card_image_ally1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_ally2.source = get_card_image_filepath("Noma Greon - skin1")
@@ -85,8 +85,6 @@ class Main(App):
         stylevars.ids.card_image_enemy_entity2.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_enemy_entity3.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_enemy_entity4.source = get_card_image_filepath("torinn inn")
-
-        
 
         return stylevars
     

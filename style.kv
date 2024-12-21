@@ -1,16 +1,11 @@
 #:kivy 2.0.0
 
 <Style>:
-    # Video:
-    #     id: background_video
-    #     source: ''  # This will be set dynamically in the Python code
-    #     state: 'play'
-    #     options: {'eos': 'loop'}  # Loop the video
-    #     size: root.width, root.height
-
-    Image:
-        id: background_image
+    Video:
+        id: background_video
         source: ''  # This will be set dynamically in the Python code
+        state: 'play'
+        options: {'eos': 'loop'}  # Loop the video
         allow_stretch: True
         keep_ratio: False
         size_hint: 1, 1
