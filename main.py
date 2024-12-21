@@ -5,7 +5,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
-from kivy.uix.video import Video
+from kivy.core.window import Window
+from kivy.config import Config
+
+# Set fullscreen mode before the window is created
+Config.set('graphics', 'fullscreen', '0') #auto for fullscreen
+Config.write()
 
 Builder.load_file("style.kv")
 
@@ -25,27 +30,26 @@ def get_card_image_filepath(card_name):
 
 class Main(App):
     def build(self):
+        # Set minimum window size for PC
+        Window.minimum_width = 800
+        Window.minimum_height = 600
+
+        # Set default window size for PC to mimic landscape mode
+        Window.fullscreen = False #'auto' for fullscreen
+
+        # Set orientation to landscape for mobile devices
+        Config.set('graphics', 'orientation', 'landscape')
+
+
         stylevars = Style()
-
-
-        #Code to get a background video (does not work)
-        #base_path = os.path.dirname(__file__)
-
-        # video_path = os.path.join(base_path, "UI elements", "Background.mp4")
-        
-        # print(f"Setting video source to: {video_path}")  # Debug print
-        
-        # if os.path.exists(video_path):
-        #     print(f"Video file found: {video_path}")  # Debug print
-        # else:
-        #     print(f"VIDEO FILE NOT FOUND: {video_path}")  # Debug print
-        
-        # stylevars.ids.background_video.source = video_path
-
         base_path = os.path.dirname(__file__)
         image_path = os.path.join(base_path, "UI elements", "Background image.jpeg")
         
         print(f"Setting background image source to: {image_path}")  # Debug print
+        
+        # Print the contents of the UI elements directory
+        ui_elements_path = os.path.join(base_path, "UI elements")
+        print(f"Contents of {ui_elements_path}: {os.listdir(ui_elements_path)}")  # Debug print
         
         if os.path.exists(image_path):
             print(f"Background image file found: {image_path}")  # Debug print
@@ -58,12 +62,34 @@ class Main(App):
         stylevars.ids.card_image_ally2.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_ally3.source = get_card_image_filepath("torinn inn")
 
+        stylevars.ids.card_image_ally_area1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_area2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_area3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_area4.source = get_card_image_filepath("torinn inn")
+
+        stylevars.ids.card_image_ally_entity1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_entity2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_entity3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_ally_entity4.source = get_card_image_filepath("torinn inn")
+
         stylevars.ids.card_image_enemy1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_enemy2.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_enemy3.source = get_card_image_filepath("torinn inn")
 
-        return stylevars
+        stylevars.ids.card_image_enemy_area1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_area2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_area3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_area4.source = get_card_image_filepath("torinn inn")
 
+        stylevars.ids.card_image_enemy_entity1.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_entity2.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_entity3.source = get_card_image_filepath("torinn inn")
+        stylevars.ids.card_image_enemy_entity4.source = get_card_image_filepath("torinn inn")
+
+        
+
+        return stylevars
+    
 class Style(Widget):
     pass
 
