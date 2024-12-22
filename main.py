@@ -43,23 +43,21 @@ class Main(App):
 
         stylevars = Style()
         base_path = os.path.dirname(__file__)
-        video_path = os.path.join(base_path, "UI elements", "story teaser.mp4")
+        image_path = os.path.join(base_path, "UI elements", "Background image.jpeg")
         
-        print(f"Setting background video source to: {video_path}")  # Debug print
+        print(f"Setting background image source to: {image_path}")  # Debug print
         
         # Print the contents of the UI elements directory
         ui_elements_path = os.path.join(base_path, "UI elements")
         print(f"Contents of {ui_elements_path}: {os.listdir(ui_elements_path)}")  # Debug print
         
-        stylevars.ids.background_video.source = video_path
-
-        if os.path.exists(video_path):
-            print(f"Background video file found: {video_path}")  # Debug print
-            stylevars.ids.background_video.source = video_path
+        if os.path.exists(image_path):
+            print(f"Background image file found: {image_path}")  # Debug print
+            stylevars.ids.background_image.source = image_path
         else:
-            print(f"BACKGROUND VIDEO FILE NOT FOUND: {video_path}")  # Debug print
-            # Set a default image if the video is not found
-            stylevars.ids.background_video.source = os.path.join(base_path, 'images', 'image not found.png')
+            print(f"BACKGROUND IMAGE FILE NOT FOUND: {image_path}")  # Debug print
+            # Set a default image if the background image is not found
+            stylevars.ids.background_image.source = os.path.join(base_path, 'images', 'image not found.png')
 
         stylevars.ids.card_image_ally1.source = get_card_image_filepath("torinn inn")
         stylevars.ids.card_image_ally2.source = get_card_image_filepath("Noma Greon - skin1")
