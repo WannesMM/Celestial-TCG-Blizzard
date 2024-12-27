@@ -1,3 +1,17 @@
+Bugs:
+
+ending round sometimes gives an error after actioning
+
+To implement:
+
+Scheduling
+
+
+
+
+
+Storage:
+
 Video:
             id: background_video
             source: ''  # This will be set dynamically in the Python code
