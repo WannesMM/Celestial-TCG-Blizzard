@@ -186,14 +186,67 @@ class Gamestate:
         else:
             self.enemy_gold -= amount
 
-    def choose_active_character(self, ally):
+
+    def set_active_character(self, ally):
+        """
+        This function will not end turn, it will only set the active character. It does not count as a switch.
+        Sets the active character for either the ally or enemy team based on user input.
+        Parameters:
+        ally (bool): If True, sets the active character for the ally team. If False, sets the active character for the enemy team.
+        Behavior:
+        - Prompts the user to choose a character number.
+        - Checks if the selected character is knocked out.
+        - If the character is not knocked out, sets the character as the active character for the respective team.
+        - Prints the name of the newly active character.
+        - If the character is knocked out, prompts the user to choose another character.
+        """
+
         number = int(input("Choose a character number: ")) - 1
+        character = self.ally_characters[number]
         if ally:
-            self.ally_active_character = self.ally_characters[number]
-            print(f"Active ally character: {self.ally_active_character.get_name()}")
+            if character.get_ko():
+                print("Character is knocked out, choose another character")
+            else:
+                self.ally_active_character = self.ally_characters[number]
+                print(f"Active ally character: {self.ally_active_character.get_name()}")
         else:
-            self.enemy_active_character = self.enemy_characters[number]
-            print(f"Active enemy character: {self.enemy_active_character.get_name()}")
+            if character.get_ko():
+                print("Character is knocked out, choose another character")
+            else:
+                self.enemy_active_character = self.enemy_characters[number]
+                print(f"Active enemy character: {self.enemy_active_character.get_name()}")
+
+
+    def switch_character(self, ally):
+        """
+        Allows the player to choose an active character from their list of characters.
+        Parameters:
+        ally (bool): If True, the player is choosing an ally character. If False, the player is choosing an enemy character.
+        Behavior:
+        - Prompts the player to input a character number.
+        - Checks if the chosen character is knocked out (KO).
+        - If the character is KO, prompts the player to choose another character.
+        - If the character is not KO, sets the chosen character as the active character.
+        - Ends the player's turn after a valid character is chosen.
+        - Prints the name of the newly active character.
+        """
+
+        number = int(input("Choose a character number: ")) - 1
+        character = self.ally_characters[number]
+        if ally:
+            if character.get_ko():
+                print("Character is knocked out, choose another character")
+            else:
+                self.ally_active_character = self.ally_characters[number]
+                self.set_turn_end(True)
+                print(f"Active ally character: {self.ally_active_character.get_name()}")
+        else:
+            if character.get_ko():
+                print("Character is knocked out, choose another character")
+            else:
+                self.enemy_active_character = self.enemy_characters[number]
+                self.set_turn_end(True)
+                print(f"Active enemy character: {self.enemy_active_character.get_name()}")
 
     def check_round_end(self):
         if self.ally_round_end and self.enemy_round_end:
@@ -221,9 +274,9 @@ class Gamestate:
         # Start of the game
         print(f"Game Start")
         print(f"Ally choose active character:")
-        self.choose_active_character(True)
+        self.set_active_character(True)
         print(f"Enemy choose active character:")
-        self.choose_active_character(False)
+        self.set_active_character(False)
         self.draw_cards(True, 3)
         self.draw_cards(False, 3)
 
@@ -254,6 +307,8 @@ class Gamestate:
             self.draw_cards(True, 2)
             self.draw_cards(False, 2)
 
+            self.execute_scheduled_effects("start of round")
+
             print(f"Round {self.get_round_counter()}")
 
             #Start of the turn loop
@@ -265,6 +320,8 @@ class Gamestate:
 
                 #Turn
                 self.turn()
+
+            self.execute_scheduled_effects("end of round")
 
         if self.get_winner():
             print(f"Ally wins")
@@ -344,27 +401,28 @@ class Gamestate:
         if(move == 'na'):
             if(self.check_cost(character.get_allied(), character.get_na_cost())):
                 print(character.get_name() + " uses " + character.normal_attack_description()[0])
+                self.set_turn_end(True)
                 self.use_move(character, move)
         elif(move == 'sa'):
             if(self.check_cost(character.get_allied(), character.get_sa_cost())):
                 print(character.get_name() + " uses " + character.special_attack_description()[0])
+                self.set_turn_end(True)
                 self.use_move(character, move)
         elif(move == 'ca'):
             if(self.check_cost(character.get_allied(), character.get_ca_cost())):
                 if(self.check_energy(character, character.get_ca_energy_cost())):
                     print(character.get_name() + " uses " + character.charged_attack_description()[0])
+                    self.set_turn_end(True)
                     self.use_move(character, move)
         
 
     def use_action(self, character, action):
         if action == 'move':
-            self.input_move(character)
-            self.set_turn_end(True)
+            self.input_move(character)     
         elif action == 'use card':
             self.play_card()
         elif action == 'switch':
-            self.choose_active_character(character.get_allied())
-            self.set_turn_end(True)
+            self.switch_character(character.get_allied())
         elif action == 'end round':
             self.end_round(character.get_allied())
             self.set_turn_end(True)
@@ -377,14 +435,15 @@ class Gamestate:
         checks whose turn it is and executes the turn accordingly.
         checks if the round has ended.
         calls the input_action method to get the player's action.
+
+        Deze code is echt slecht, misschien dat ik het ooit is fix
         """
         i = 0
         while i < 2:
             while(self.get_turn_end() == False):
                 if self.get_ally_round_end() == True and self.get_ally_turn() == True:
                     self.set_ally_turn(not self.get_ally_turn())
-
-                if self.get_enemy_round_end() == True and self.get_enemy_turn() == False:
+                elif self.get_enemy_round_end() == True and self.get_enemy_turn() == True:
                     self.set_ally_turn(not self.get_ally_turn())
 
                 if self.get_ally_turn() and self.get_ally_round_end() == False:
@@ -397,7 +456,9 @@ class Gamestate:
                     self.input_action(character)
             i += 1
             self.set_ally_turn(not self.get_ally_turn())
-            self.set_turn_end(False)
+
+            if(self.check_round_end() != True):  
+                self.set_turn_end(False)
         
     def check_winner(self):
         ally_ko = True
@@ -435,3 +496,38 @@ class Gamestate:
             print(f"HP: {character.get_hp()}")
             print(f"Energy: {character.get_energy()}")
             print("")
+
+    def schedule_effect(self, effect, scheduler, moment):
+        """
+        Schedules an effect to be executed at a specified moment.
+        Args:
+            effect (callable): The effect to be scheduled.
+            The class that scheduled the effect.
+            moment (int): The moment at which the effect should be executed.
+
+            start of round
+            end of round
+        """ 
+        self.scheduled_effects.append((effect, scheduler, moment))
+
+    def execute_scheduled_effects(self, moment):
+        """
+        Executes all scheduled effects that are set to occur at the specified moment.
+        Args:
+            moment (str): The specific moment at which to execute the scheduled effects.
+        """
+
+        for effect in self.scheduled_effects:
+            if effect[2] == moment:
+                effect[0]()
+    
+    def remove_scheduled_effect(self, effect, scheduler):
+        """
+        Removes a scheduled effect from the list of scheduled effects.
+        Args:
+            effect: The effect to be removed from the scheduled effects list.
+            the instance of the class that scheduled the effect.
+        """
+        for deffect in self.scheduled_effects:
+            if ((deffect[1] == scheduler) and (deffect[0].__name__ == effect.__name__)):
+                self.scheduled_effects.remove(deffect)

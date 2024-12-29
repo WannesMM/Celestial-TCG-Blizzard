@@ -51,16 +51,20 @@ class Torinn_Inn(CharacterCard):
 
         damage = self.sa_dmg
         self.gamestate.deal_damage(self, damage, self.gamestate.get_active_opponent(self))
-        self.gamestate.schedule_effect(self.golden_breath_effect, 0)
+        self.gamestate.schedule_effect(lambda: self.golden_breath_effect(self.gamestate.get_active_opponent(self)), self, "start of round")
         self.golden_breath_counter += 2
 
         self.gamestate.gain_energy(self, 1)
         self.gamestate.reduce_gold(self.allied, self.sa_cost)
 
-    def golden_breath_effect(self):
-        if(self.gamestate.get_active_opponent().get_hp() >= 5):
+    def golden_breath_effect(self, target):
+        if(target.get_hp() >= 5):
+            print("Golden Breath effect")
             self.gamestate.deal_damage(self, 1, self.gamestate.get_active_opponent(self))
         self.golden_breath_counter -= 1
+
+        if(self.golden_breath_counter == 0):
+            self.gamestate.remove_scheduled_effect(lambda: self.golden_breath_effect(self.gamestate.get_active_opponent(self)), self)
 
     def charged_attack(self):
 
@@ -72,13 +76,17 @@ class Torinn_Inn(CharacterCard):
         self.gamestate.reduce_gold(self.allied, self.ca_cost)
 
     def take_damage(self, damage):
-        self.hp -= damage
-        if(self.hp < 0):
-            self.hp = 0
-
-        self.ability()
+        print(self.get_name() + " takes " + str(damage) + " damage!")
+        self.set_hp(self.get_hp() - damage)
+        print(self.get_name() + " has " + str(self.get_hp()) + " HP remaining!")
+        if(self.get_hp() <= 0):
+            print(self.get_name() + " is knocked out!")
+            self.set_hp(0)
+            self.set_ko(True)
+        else:
+            self.ability()
 
     def ability(self):
         if(self.gamestate.get_turn_counter() != self.lay_on_hands_active_previous_turn):
-            self.hp += 1
+            self.heal_hp(1)
         

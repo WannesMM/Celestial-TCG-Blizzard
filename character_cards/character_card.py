@@ -44,6 +44,7 @@ class CharacterCard(ABC):
 
     def set_ko(self, ko):
         self.ko = ko
+        self.gamestate.check_win()
 
     def get_allied(self):
         """
@@ -139,7 +140,8 @@ class CharacterCard(ABC):
         print(self.get_name() + " takes " + str(damage) + " damage!")
         self.set_hp(self.get_hp() - damage)
         print(self.get_name() + " has " + str(self.get_hp()) + " HP remaining!")
-        if(self.get_hp() < 0):
+        if(self.get_hp() <= 0):
+            print(self.get_name() + " is knocked out!")
             self.set_hp(0)
             self.set_ko(True)
 
@@ -148,6 +150,23 @@ class CharacterCard(ABC):
             self.gamestate.deal_damage(self, self.get_na_dmg(), self.gamestate.get_active_opponent())
             self.gamestate.gain_energy(self, 1)
             self.gamestate.reduce_gold(self.allied, self.na_cost)
+
+    def heal_hp(self, amount):
+        """
+        Heals the character by a specified amount of HP.
+        If the resulting HP exceeds the character's maximum HP, the HP is set to the maximum HP.
+        Args:
+            amount (int): The amount of HP to heal the character.
+        Prints:
+            A message indicating the amount of HP healed or if the character is at full HP.
+        """
+
+        if(self.get_hp() + amount <= self.get_max_hp()):
+            print(self.get_name() + " heals " + str(amount) + " HP!")
+            self.set_hp(self.get_hp() + amount)
+        else:
+            print(self.get_name() + "Heals " + (self.get_max_hp() - self.get_hp()) + " is at full HP!")
+            self.set_hp(self.get_max_hp())
 
     @abstractmethod
     def normal_attack_description(self):
