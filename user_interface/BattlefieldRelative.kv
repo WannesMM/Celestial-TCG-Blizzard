@@ -1,0 +1,310 @@
+#:kivy 2.0.0
+
+<BattlefieldRelative>:
+    Image:
+        id: background_image
+        source: ''  # This will be set dynamically in the Python code
+        allow_stretch: True
+        keep_ratio: False
+        size_hint: 1, 1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        size: root.width, root.height
+
+    BoxLayout: #Ally and Enemy division
+        orientation: 'vertical'
+        size: root.width, root.height
+        spacing: 25
+        padding: 50
+
+        BoxLayout: #Area, character card, entity division for enemy
+            orientation: 'horizontal'
+            size: root.width, root.height
+            spacing: 10
+            padding: 10
+
+            BoxLayout: #Matrix for area cards enemy (horizontal)
+                orientation: 'horizontal'
+                size: root.width, root.height
+                spacing: 10
+                size_hint: 0.5, 1
+
+                BoxLayout: #Matrix for area cards enemy (vertical) 1
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_enemy_area1
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_enemy_area2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                BoxLayout: #Matrix for area cards enemy (vertical) 2
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_enemy_area3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_enemy_area4
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+            BoxLayout: #Character cards enemy
+                orientation: 'horizontal'
+                spacing: 20
+                size_hint: 1.5, 1
+
+                FloatLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_enemy1
+                        source: ""
+
+                        size_hint: 1, 1
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5} 
+                    Label:
+                        id: hp_label_enemy1
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos: (self.parent.center_x - self.width / 2 + 70, self.parent.center_y - self.height / 2 + 90)  # Adjust the position as needed
+
+                RelativeLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_enemy2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 1
+                    Label:
+                        id: hp_label_enemy2
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'top': 1}
+
+                RelativeLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_enemy3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 1
+                    Label:
+                        id: hp_label_enemy3
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'top': 1}
+
+            BoxLayout: #Matrix for entity cards enemy (horizontal)
+                orientation: 'horizontal'
+                size: root.width, root.height
+                spacing: 10
+                size_hint: 0.5, 1
+
+                BoxLayout: #Matrix for entity cards enemy (vertical) 1
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_enemy_entity1
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_enemy_entity2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                BoxLayout: #Matrix for entity cards enemy (vertical) 2
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_enemy_entity3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_enemy_entity4
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+        BoxLayout: #Area, character card, entity division for ally
+            orientation: 'horizontal'
+            size: root.width, root.height
+            spacing: 10
+            padding: 10
+
+            BoxLayout: #Matrix for area cards ally (horizontal)
+                orientation: 'horizontal'
+                size: root.width, root.height
+                spacing: 10
+                size_hint: 0.5, 1
+
+                BoxLayout: #Matrix for area cards ally (vertical) 1
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_ally_area1
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_ally_area2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                BoxLayout: #Matrix for area cards enemy (vertical) 2
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_ally_area3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_ally_area4
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+            BoxLayout: #Character cards ally
+                orientation: 'horizontal'
+                spacing: 20
+                size_hint: 1.5, 1
+
+                RelativeLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_ally1
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 1
+                    Label:
+                        id: hp_label_ally1
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'top': 1}
+
+                RelativeLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_ally2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 1
+                    Label:
+                        id: hp_label_ally2
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'top': 1}
+
+                RelativeLayout:
+                    size_hint: 1, 1
+                    Image:
+                        id: card_image_ally3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 1
+                    Label:
+                        id: hp_label_ally3
+                        text: "HP"
+                        size_hint: None, None
+                        size: self.texture_size
+                        pos_hint: {'right': 1, 'top': 1}
+
+            BoxLayout: #Matrix for entity cards ally (horizontal)
+                orientation: 'horizontal'
+                size: root.width, root.height
+                spacing: 10
+                size_hint: 0.5, 1
+
+                BoxLayout: #Matrix for entity cards ally (vertical) 1
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_ally_entity1
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_ally_entity2
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                BoxLayout: #Matrix for entity cards ally (vertical) 2
+                    orientation: 'vertical'
+                    size: root.width, root.height
+                    spacing: 10
+
+                    Image:
+                        id: card_image_ally_entity3
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+                    Image:
+                        id: card_image_ally_entity4
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: 1, 0.5
+
+
+
+
+
